@@ -1,18 +1,7 @@
 package vector
 
-import "errors"
-
-// Errors
-var (
-	ErrDifferentLength = errors.New("lengths of the input vectors are different")
-)
-
 // DotProduct returns the dot product of the two input vectors.
-func DotProduct(x, y []float64) (float64, error) {
-	if len(x) != len(y) {
-		return 0.0, ErrDifferentLength
-	}
-
+func DotProduct(x, y []float64) float64 {
 	ch := make(chan float64, numConcurrency)
 
 	n := len(x)
@@ -31,7 +20,7 @@ func DotProduct(x, y []float64) (float64, error) {
 		sum += <-ch
 	}
 
-	return sum, nil
+	return sum
 }
 
 // dotProduct returns the dot product of the two input vectors.
